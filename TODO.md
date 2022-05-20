@@ -1,6 +1,7 @@
 **TODO**
 - [ ] Implement lineCount option (-n)
 - [ ] Think about both the options and modify head function
+- [ ] Implement countBytes option
 
 **DONE**
 
