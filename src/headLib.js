@@ -1,6 +1,8 @@
+const { parseArgs } = require('./parseArgs.js');
 const { splitLines, joinLines } = require('./stringUtils.js');
 
 const extractLines = (lines, countOfLines) => lines.slice(0, countOfLines);
+
 const extractBytes = (content, countOfbytes) => content.slice(0, countOfbytes);
 
 const head = function (content, options) {
@@ -11,9 +13,10 @@ const head = function (content, options) {
   return joinLines(extractLines(lines, options.lineCount));
 };
 
-const headMain = function (readFile, fileName) {
+const headMain = function (readFile, ...args) {
+  const { fileName, options } = parseArgs(args);
   const content = readFile(fileName, 'utf8');
-  return head(content, { lineCount: 1 });
+  return head(content, options);
 };
 
 exports.head = head;

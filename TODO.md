@@ -1,8 +1,7 @@
 **TODO**
-- [ ] Implement passing default(10) line count option to head from upper level function
-- [ ] Implement passing byte count option to head using upper level function
-- [ ] Implement a function to parse args
 - [ ] Write main and pass file
+- [ ] Refactor head function
+- [ ] Think of handling multiple files
 
 **MAYBE**
 - [ ] Consider having the keys of the option object consistent
@@ -22,3 +21,6 @@
 - [x] Implement lineCount option (-n)
 - [x] Think about both the options and modify head function
 - [x] Implement passing line count option to head from upper level function
+- [x] Implement passing default(10) line count option to head from upper level function
+- [x] Implement passing byte count option to head using upper level function
+- [x] Implement a function to parse args
