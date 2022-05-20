@@ -1,6 +1,6 @@
 **TODO**
 
-- [ ] Have a seperate function for returning only count of lines 
+- [ ] Have a seperate function for returning only specified number of lines 
 - [ ] Implement lineCount option (-n)
 
 **DONE**
