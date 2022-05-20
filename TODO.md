@@ -1,6 +1,8 @@
 **TODO**
 - [ ] Implement passing default(10) line count option to head from upper level function
 - [ ] Implement passing byte count option to head using upper level function
+- [ ] Implement a function to parse args
+- [ ] Write main and pass file
 
 **MAYBE**
 - [ ] Consider having the keys of the option object consistent
