@@ -24,7 +24,8 @@ describe('extractLines', () => {
   });
   it('should return two lines', () => {
     assert.deepStrictEqual(extractLines(['hello', 'hii'], 2), ['hello', 'hii']);
-    assert.deepStrictEqual(extractLines(['hello', 'hii', 'bye'], 2), ['hello', 'hii']);
+    const expected = ['hello', 'hii'];
+    assert.deepStrictEqual(extractLines(['hello', 'hii', 'bye'], 2), expected);
   });
   it('should return given number of lines', () => {
     const input = ['hello', 'hii', 'bye', 'see you'];

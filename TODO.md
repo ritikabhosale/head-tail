@@ -1,9 +1,11 @@
 **TODO**
-- [x] Keep the test inputs consistent
+- [ ] Change the contract of head to receive options
 - [ ] Implement lineCount option (-n)
+- [ ] Think about both the options and modify head function
 
 **DONE**
 
+- [x] Keep the test inputs consistent
 - [x] Create directory structure
 - [x] Verify mocha
 - [x] Establish contract for head without options and without files
