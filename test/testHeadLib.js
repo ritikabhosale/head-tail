@@ -15,6 +15,19 @@ describe('head', () => {
   it('should return given number of lines', () => {
     assert.deepStrictEqual(head('hii\nhello\nbye\nmat', { lineCount: 3 }), 'hii\nhello\nbye');
   });
+
+  it('should return a byte', () => {
+    assert.deepStrictEqual(head('h', { byteCount: 1 }), 'h');
+    assert.deepStrictEqual(head('hii', { byteCount: 1 }), 'h');
+  });
+
+  it('should return given number of bytes', () => {
+    assert.deepStrictEqual(head('hello', { byteCount: 4 }), 'hell');
+  });
+
+  it('should return given number of bytes with \n', () => {
+    assert.deepStrictEqual(head('hii\nhello', { byteCount: 6 }), 'hii\nhe');
+  });
 });
 
 describe('extractLines', () => {
