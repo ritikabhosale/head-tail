@@ -3,17 +3,17 @@ const { head, extractLines } = require('../src/headLib.js');
 
 describe('head', () => {
   it('should return one line of content', () => {
-    assert.deepStrictEqual(head('hello', 1), 'hello');
-    assert.deepStrictEqual(head('hii', 1), 'hii');
-    assert.deepStrictEqual(head('hii\nhello', 1), 'hii');
+    assert.deepStrictEqual(head('hello', { lineCount: 1 }), 'hello');
+    assert.deepStrictEqual(head('hii', { lineCount: 1 }), 'hii');
+    assert.deepStrictEqual(head('hii\nhello', { lineCount: 1 }), 'hii');
   });
 
   it('should return two lines', () => {
-    assert.deepStrictEqual(head('hii\nhello\nbye', 2), 'hii\nhello');
+    assert.deepStrictEqual(head('hii\nhello\nbye', { lineCount: 2 }), 'hii\nhello');
   });
 
   it('should return given number of lines', () => {
-    assert.deepStrictEqual(head('hii\nhello\nbye\nmat', 3), 'hii\nhello\nbye');
+    assert.deepStrictEqual(head('hii\nhello\nbye\nmat', { lineCount: 3 }), 'hii\nhello\nbye');
   });
 });
 

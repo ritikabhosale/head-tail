@@ -1,5 +1,4 @@
 **TODO**
-- [ ] Change the contract of head to receive options
 - [ ] Implement lineCount option (-n)
 - [ ] Think about both the options and modify head function
 
@@ -13,3 +12,4 @@
 - [x] Implement head without options
 - [x] Extract splitting of lines into seperate function
 - [x] Have a seperate function for returning only specified number of lines 
+- [x] Change the contract of head to receive options
