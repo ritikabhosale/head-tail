@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { head, extractLines, extractBytes } = require('../src/headLib.js');
+const { head, extractLines, extractBytes, headMain } = require('../src/headLib.js');
 
 describe('head', () => {
   it('should return one line of content', () => {
@@ -62,5 +62,20 @@ describe('extractBytes', () => {
   it('should count \n as a byte', () => {
     assert.deepStrictEqual(extractBytes('hi\n', 3), 'hi\n');
     assert.deepStrictEqual(extractBytes('hi\nhello', 4), 'hi\nh');
+  });
+});
+
+const shouldReturn = function (mockFile, content) {
+  return function (fileName, encoding) {
+    assert.equal(fileName, mockFile);
+    assert.equal(encoding, 'utf8');
+    return content;
+  };
+};
+
+describe('headMain', () => {
+  it('should return a line', () => {
+    const mockReadFileSync = shouldReturn('a.txt', 'hello');
+    assert.deepStrictEqual(headMain(mockReadFileSync, 'a.txt'), 'hello');
   });
 });

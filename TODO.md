@@ -1,6 +1,5 @@
 **TODO**
 - [ ] Implement passing default(10) line count option to head from upper level function
-- [ ] Implement passing line count option to head from upper level function
 - [ ] Implement passing byte count option to head using upper level function
 
 **MAYBE**
@@ -20,3 +19,4 @@
 - [x] Implement countBytes option
 - [x] Implement lineCount option (-n)
 - [x] Think about both the options and modify head function
+- [x] Implement passing line count option to head from upper level function

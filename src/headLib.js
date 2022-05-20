@@ -11,6 +11,12 @@ const head = function (content, options) {
   return joinLines(extractLines(lines, options.lineCount));
 };
 
+const headMain = function (readFile, fileName) {
+  const content = readFile(fileName, 'utf8');
+  return head(content, { lineCount: 1 });
+};
+
 exports.head = head;
 exports.extractBytes = extractBytes;
 exports.extractLines = extractLines;
+exports.headMain = headMain;
