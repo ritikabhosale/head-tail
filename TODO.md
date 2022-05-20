@@ -1,6 +1,5 @@
 **TODO**
 - [ ] Write main and pass file
-- [ ] Refactor head function
 - [ ] Think of handling multiple files
 
 **MAYBE**
@@ -24,3 +23,4 @@
 - [x] Implement passing default(10) line count option to head from upper level function
 - [x] Implement passing byte count option to head using upper level function
 - [x] Implement a function to parse args
+- [x] Refactor head function
