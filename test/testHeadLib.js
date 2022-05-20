@@ -5,15 +5,15 @@ describe('head', () => {
   it('should return one line of content', () => {
     assert.deepStrictEqual(head('hello', 1), 'hello');
     assert.deepStrictEqual(head('hii', 1), 'hii');
-    assert.deepStrictEqual(head('cat\nbat', 1), 'cat');
+    assert.deepStrictEqual(head('hii\nhello', 1), 'hii');
   });
 
   it('should return two lines', () => {
-    assert.deepStrictEqual(head('cat\nbat\nrat', 2), 'cat\nbat');
+    assert.deepStrictEqual(head('hii\nhello\nbye', 2), 'hii\nhello');
   });
 
   it('should return given number of lines', () => {
-    assert.deepStrictEqual(head('cat\nbat\nrat\nmat', 3), 'cat\nbat\nrat');
+    assert.deepStrictEqual(head('hii\nhello\nbye\nmat', 3), 'hii\nhello\nbye');
   });
 });
 

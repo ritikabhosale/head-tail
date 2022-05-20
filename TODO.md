@@ -1,5 +1,5 @@
 **TODO**
-- [ ] Keep the test inputs consistent
+- [x] Keep the test inputs consistent
 - [ ] Implement lineCount option (-n)
 
 **DONE**
