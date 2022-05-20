@@ -1,5 +1,7 @@
 **TODO**
 - [ ] Think of handling multiple files
+- [ ] Change the contract of parse args to return object with consistent keys
+  - [ ] Eventually contract of head will also change 
 
 **MAYBE**
 - [ ] Consider having the keys of the option object consistent
