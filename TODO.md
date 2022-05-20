@@ -1,5 +1,4 @@
 **TODO**
-- [ ] Write main and pass file
 - [ ] Think of handling multiple files
 
 **MAYBE**
@@ -24,3 +23,4 @@
 - [x] Implement passing byte count option to head using upper level function
 - [x] Implement a function to parse args
 - [x] Refactor head function
+- [x] Write main and pass file
