@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { head, extractLines } = require('../src/headLib.js');
+const { head, extractLines, extractBytes } = require('../src/headLib.js');
 
 describe('head', () => {
   it('should return one line of content', () => {
@@ -22,11 +22,13 @@ describe('extractLines', () => {
     assert.deepStrictEqual(extractLines(['hello'], 1), ['hello']);
     assert.deepStrictEqual(extractLines(['hello', 'hii'], 1), ['hello']);
   });
+
   it('should return two lines', () => {
     assert.deepStrictEqual(extractLines(['hello', 'hii'], 2), ['hello', 'hii']);
     const expected = ['hello', 'hii'];
     assert.deepStrictEqual(extractLines(['hello', 'hii', 'bye'], 2), expected);
   });
+
   it('should return given number of lines', () => {
     const input = ['hello', 'hii', 'bye', 'see you'];
     const expected = ['hello', 'hii', 'bye'];
@@ -34,3 +36,18 @@ describe('extractLines', () => {
   });
 });
 
+describe('extractBytes', () => {
+  it('should return only 1 byte', () => {
+    assert.deepStrictEqual(extractBytes('h', 1), 'h');
+    assert.deepStrictEqual(extractBytes('hi', 1), 'h');
+  });
+
+  it('should return specified number of bytes', () => {
+    assert.deepStrictEqual(extractBytes('hello', 3), 'hel');
+  });
+
+  it('should count \n as a byte', () => {
+    assert.deepStrictEqual(extractBytes('hi\n', 3), 'hi\n');
+    assert.deepStrictEqual(extractBytes('hi\nhello', 4), 'hi\nh');
+  });
+});

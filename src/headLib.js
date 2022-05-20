@@ -1,6 +1,7 @@
 const { splitLines, joinLines } = require('./stringUtils.js');
 
 const extractLines = (lines, countOfLines) => lines.slice(0, countOfLines);
+const extractBytes = (content, countOfbytes) => content.slice(0, countOfbytes);
 
 const head = function (content, options) {
   const lines = splitLines(content);
@@ -8,4 +9,5 @@ const head = function (content, options) {
 };
 
 exports.head = head;
+exports.extractBytes = extractBytes;
 exports.extractLines = extractLines;
