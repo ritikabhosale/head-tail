@@ -7,5 +7,13 @@ describe('head', () => {
     assert.deepStrictEqual(head('hii', 1), 'hii');
     assert.deepStrictEqual(head('cat\nbat', 1), 'cat');
   });
+
+  it('should return two lines', () => {
+    assert.deepStrictEqual(head('cat\nbat\nrat', 2), 'cat\nbat');
+  });
+
+  it('should return given number of lines', () => {
+    assert.deepStrictEqual(head('cat\nbat\nrat\nmat', 3), 'cat\nbat\nrat');
+  });
 });
 
