@@ -21,7 +21,12 @@ const headMain = function (readFile, ...args) {
     throw error
   }
   const { option, count, files } = parsedArgs;
-  const content = readFile(files[0], 'utf8');
+  let content = '';
+  try {
+    content = readFile(files[0], 'utf8');
+  } catch (error) {
+    throw { name: 'usage: head [-n lines | -c bytes] [file ...]' };
+  }
   return head(content, { option, count });
 };
 
