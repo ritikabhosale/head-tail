@@ -5,18 +5,18 @@ const extractLines = (lines, countOfLines) => lines.slice(0, countOfLines);
 
 const extractBytes = (content, countOfbytes) => content.slice(0, countOfbytes);
 
-const head = function (content, { byteCount, lineCount }) {
-  if (byteCount) {
-    return extractBytes(content, byteCount);
+const head = function (content, { option, count }) {
+  if (option === 'byteCount') {
+    return extractBytes(content, count);
   }
   const lines = splitLines(content);
-  return joinLines(extractLines(lines, lineCount));
+  return joinLines(extractLines(lines, count));
 };
 
 const headMain = function (readFile, ...args) {
-  const { fileName, options } = parseArgs(args);
-  const content = readFile(fileName, 'utf8');
-  return head(content, options);
+  const { option, value: count, files } = parseArgs(args);
+  const content = readFile(files[0], 'utf8');
+  return head(content, { option, count });
 };
 
 exports.head = head;

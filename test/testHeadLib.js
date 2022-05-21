@@ -3,30 +3,30 @@ const { head, extractLines, extractBytes, headMain } = require('../src/headLib.j
 
 describe('head', () => {
   it('should return one line of content', () => {
-    assert.deepStrictEqual(head('hello', { lineCount: 1 }), 'hello');
-    assert.deepStrictEqual(head('hii', { lineCount: 1 }), 'hii');
-    assert.deepStrictEqual(head('hii\nhello', { lineCount: 1 }), 'hii');
+    assert.deepStrictEqual(head('hello', { option: 'lineCount', count: 1 }), 'hello');
+    assert.deepStrictEqual(head('hii', { option: 'lineCount', count: 1 }), 'hii');
+    assert.deepStrictEqual(head('hii\nhello', { option: 'lineCount', count: 1 }), 'hii');
   });
 
   it('should return two lines', () => {
-    assert.deepStrictEqual(head('hii\nhello\nbye', { lineCount: 2 }), 'hii\nhello');
+    assert.deepStrictEqual(head('hii\nhello\nbye', { option: 'lineCount', count: 2 }), 'hii\nhello');
   });
 
   it('should return given number of lines', () => {
-    assert.deepStrictEqual(head('hii\nhello\nbye\nmat', { lineCount: 3 }), 'hii\nhello\nbye');
+    assert.deepStrictEqual(head('hii\nhello\nbye\nmat', { option: 'lineCount', count: 3 }), 'hii\nhello\nbye');
   });
 
   it('should return a byte', () => {
-    assert.deepStrictEqual(head('h', { byteCount: 1 }), 'h');
-    assert.deepStrictEqual(head('hii', { byteCount: 1 }), 'h');
+    assert.deepStrictEqual(head('h', { option: 'byteCount', count: 1 }), 'h');
+    assert.deepStrictEqual(head('hii', { option: 'byteCount', count: 1 }), 'h');
   });
 
   it('should return given number of bytes', () => {
-    assert.deepStrictEqual(head('hello', { byteCount: 4 }), 'hell');
+    assert.deepStrictEqual(head('hello', { option: 'byteCount', count: 4 }), 'hell');
   });
 
   it('should return given number of bytes with \n', () => {
-    assert.deepStrictEqual(head('hii\nhello', { byteCount: 6 }), 'hii\nhe');
+    assert.deepStrictEqual(head('hii\nhello', { option: 'byteCount', count: 6 }), 'hii\nhe');
   });
 });
 
