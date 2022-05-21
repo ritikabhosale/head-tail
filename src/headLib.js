@@ -14,7 +14,13 @@ const head = function (content, { option, count }) {
 };
 
 const headMain = function (readFile, ...args) {
-  const { option, value: count, files } = parseArgs(args);
+  let parsedArgs = {};
+  try {
+    parsedArgs = parseArgs(args);
+  } catch (error) {
+    throw error
+  }
+  const { option, count, files } = parsedArgs;
   const content = readFile(files[0], 'utf8');
   return head(content, { option, count });
 };

@@ -48,7 +48,7 @@
     "handle-callback-err": "error",
     "id-length": "error",
     "key-spacing": "error",
-    "max-len": "error",
+    "max-len": "warn",
     "max-params": [
       "error",
       {
