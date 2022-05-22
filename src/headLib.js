@@ -19,7 +19,7 @@ const headMain = function (readFile, ...args) {
   try {
     content = readFile(files[0], 'utf8');
   } catch (error) {
-    throw { name: 'usage: head [-n lines | -c bytes] [file ...]' };
+    throw { message: `head: ${files[0]}: No such file or directory` };
   }
   return head(content, { option, count });
 };

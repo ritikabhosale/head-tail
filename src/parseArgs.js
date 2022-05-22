@@ -20,16 +20,16 @@ const validateOptions = function (options) {
   for (let index = 0; index < options.length; index++) {
     const [flag, count] = options[index];
     if (isInvalidFlag(flag, keys)) {
-      throw { name: `head: illegal option --  ${flag}\nusage: head [-n lines | -c bytes] [file ...]` };
+      throw { message: `head: illegal option --  ${flag}\nusage: head [-n lines | -c bytes] [file ...]` };
     }
     if (isInvalidCount(count)) {
-      throw { name: `head: illegal ${keys[flag]} -- ${count} ` };
+      throw { message: `head: illegal ${keys[flag]} -- ${count} ` };
     }
     validOptions.option = keys[flag];
     validOptions.count = count;
   }
   if (areOptionsMerged(options)) {
-    throw { name: 'head: can\'t combine line and byte counts' };
+    throw { message: 'head: can\'t combine line and byte counts' };
   }
   if (isEmpty(validOptions)) {
     validOptions = { option: 'lineCount', count: 10 };
