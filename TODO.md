@@ -1,6 +1,7 @@
 **TODO**
 - [ ] Think of handling multiple files
 - [ ] Clean validateArgs function
+- [ ] Move headMain test cases to different test file
 
 **MAYBE**
 
