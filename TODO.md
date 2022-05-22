@@ -1,8 +1,6 @@
 **TODO**
 - [ ] Think of handling multiple files
 - [ ] Clean validateArgs function
-- [ ] Clean parseArgs.js 
-- [ ] Write tests for functions in parseArgs.js
 
 **MAYBE**
 
@@ -31,3 +29,4 @@
 - [x] validateArgs should handle errors
 - [x] Clean parseOptions
 - [x] Consider having the keys of the option object consistent
+- [x] Write tests for functions in parseArgs.js
