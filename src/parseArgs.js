@@ -23,7 +23,7 @@ const validateOptions = function (options) {
       throw { message: `head: illegal option --  ${flag}\nusage: head [-n lines | -c bytes] [file ...]` };
     }
     if (isInvalidCount(count)) {
-      throw { message: `head: illegal ${keys[flag]} -- ${count} ` };
+      throw { message: `head: illegal ${keys[flag]} -- ${count}` };
     }
     validOptions.option = keys[flag];
     validOptions.count = count;
@@ -61,4 +61,5 @@ const parseArgs = function (args) {
 
 exports.parseArgs = parseArgs;
 exports.parseOptions = parseOptions;
-exports.validOptions = validateOptions;
+exports.validateOptions = validateOptions;
+exports.areOptionsMerged = areOptionsMerged;
