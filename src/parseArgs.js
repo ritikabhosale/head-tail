@@ -39,33 +39,24 @@ const validateOptions = function (options) {
 
 const parseOptions = function (args) {
   const options = [];
-  let option = [];
   let index = 0;
   while (index < args.length && isAnOption(args[index])) {
-    if (isFollowedByValue(args[index])) {
-      option = [args[index][1], +args[index].slice(2)];
-    }
-    else {
+    let option = [args[index][1], +args[index].slice(2)];
+    if (!isFollowedByValue(args[index])) {
       option = [args[index][1], +args[index + 1]];
       index++;
     }
     index++;
     options.push(option);
   }
-  const files = args.slice(index);
-  return { options, files };
+  return { options, files: args.slice(index) };
 };
 
 const parseArgs = function (args) {
   const { options, files } = parseOptions(args);
-  let validatedOptions = [];
-  try {
-    validatedOptions = validateOptions(options);
-  } catch (error) {
-    throw error;
-  }
-  validatedOptions.files = files;
-  return validatedOptions;
+  const validOptions = validateOptions(options);
+  validOptions.files = files;
+  return validOptions;
 };
 
 exports.parseArgs = parseArgs;

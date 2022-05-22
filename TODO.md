@@ -1,11 +1,10 @@
 **TODO**
 - [ ] Think of handling multiple files
+- [ ] Clean validateArgs function
 - [ ] Clean parseArgs.js 
 - [ ] Write tests for functions in parseArgs.js
-- [ ] validateArgs should handle errors
 
 **MAYBE**
-- [ ] Consider having the keys of the option object consistent
 
 **DONE**
 
@@ -29,3 +28,6 @@
 - [x] Write main and pass file
 - [x] Change the contract of parse args to return object with consistent keys
   - [x] Eventually contract of head will also change 
+- [x] validateArgs should handle errors
+- [x] Clean parseOptions
+- [x] Consider having the keys of the option object consistent
