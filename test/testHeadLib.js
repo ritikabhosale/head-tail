@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { head, extractLines, extractBytes, headMain } = require('../src/headLib.js');
+const { head, extractLines, extractBytes, } = require('../src/headLib.js');
 
 describe('head', () => {
   it('should return one line of content', () => {
@@ -62,41 +62,5 @@ describe('extractBytes', () => {
   it('should count \n as a byte', () => {
     assert.deepStrictEqual(extractBytes('hi\n', 3), 'hi\n');
     assert.deepStrictEqual(extractBytes('hi\nhello', 4), 'hi\nh');
-  });
-});
-
-const shouldReturn = function (mockFile, content) {
-  return function (fileName, encoding) {
-    assert.equal(fileName, mockFile);
-    assert.equal(encoding, 'utf8');
-    return content;
-  };
-};
-
-describe('headMain', () => {
-  it('should return a line', () => {
-    const mockReadFileSync = shouldReturn('a.txt', 'hello');
-    assert.deepStrictEqual(headMain(mockReadFileSync, 'a.txt'), 'hello');
-  });
-
-  it('should return error, file doesn\'t exist', () => {
-    const mockReadFileSync = shouldReturn('a.txt', 'hello');
-    assert.throws(() => headMain(mockReadFileSync, 'b.txt'), { message: 'head: b.txt: No such file or directory' });
-
-    assert.throws(() => headMain(mockReadFileSync, '-n3', 'b.txt'), { message: 'head: b.txt: No such file or directory' });
-  });
-
-  it('should throw error for mixing valid options', () => {
-    const mockReadFileSync = shouldReturn('a.txt', 'hello');
-    assert.throws(() => headMain(mockReadFileSync, '-n3', '-c6', 'a.txt'), {
-      message: 'head: can\'t combine line and byte counts'
-    });
-  });
-
-  it('should throw error for invalid option', () => {
-    const mockReadFileSync = shouldReturn('a.txt', 'hello');
-    assert.throws(() => headMain(mockReadFileSync, '-v3', '-c6', 'a.txt'), {
-      message: 'head: illegal option --  v\nusage: head [-n lines | -c bytes] [file ...]'
-    });
   });
 });

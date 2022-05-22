@@ -1,7 +1,6 @@
 **TODO**
 - [ ] Think of handling multiple files
 - [ ] Clean validateArgs function
-- [ ] Move headMain test cases to different test file
 
 **MAYBE**
 
@@ -31,3 +30,4 @@
 - [x] Clean parseOptions
 - [x] Consider having the keys of the option object consistent
 - [x] Write tests for functions in parseArgs.js
+- [x] Move headMain test cases to different test file
