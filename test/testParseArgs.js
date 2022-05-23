@@ -10,7 +10,7 @@ describe('parseArgs', () => {
     });
   });
 
-  it('should parse the filename only', () => {
+  it('should parse the filename and return defualt option', () => {
     assert.deepStrictEqual(parseArgs(['abc.txt']), {
       files: ['abc.txt'],
       option: 'lineCount',
@@ -58,26 +58,6 @@ describe('parseOptions', () => {
 });
 
 describe('validateOptions', () => {
-  it('should return option object of line count', () => {
-    const expected = { option: 'lineCount', count: 2 };
-    assert.deepStrictEqual(validateOptions([['n', 2]]), expected);
-  });
-
-  it('should return option object of byte count', () => {
-    const expected = { option: 'byteCount', count: 3 };
-    assert.deepStrictEqual(validateOptions([['c', 3]]), expected);
-  });
-
-  it('should return last option count when specified redundantly', () => {
-    const expected = { option: 'lineCount', count: 2 };
-    assert.deepStrictEqual(validateOptions([['n', 3], ['n', 2]]), expected);
-  });
-
-  it('should return defualt line count when no options specified', () => {
-    const expected = { option: 'lineCount', count: 10 };
-    assert.deepStrictEqual(validateOptions([]), expected);
-  });
-
   it('should throw illegal option error', () => {
     assert.throws(() => validateOptions([['b', 4]]), { message: 'head: illegal option --  b\nusage: head [-n lines | -c bytes] [file ...]' });
   });

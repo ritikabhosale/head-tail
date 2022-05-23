@@ -1,8 +1,7 @@
 **TODO**
 - [ ] Think of handling multiple files
-- [ ] Clean validateArgs function
-- [ ] validateOption shouldn't return valid options, seperate that concern to another function
 - [ ] Work on multiple files
+- [ ] Parse and validate together
 
 **MAYBE**
 
@@ -33,3 +32,5 @@
 - [x] Consider having the keys of the option object consistent
 - [x] Write tests for functions in parseArgs.js
 - [x] Move headMain test cases to different test file
+- [X] Clean validateArgs function
+- [X] validateOption shouldn't return valid options, seperate that concern to another function
