@@ -1,7 +1,6 @@
 **TODO**
 - [ ] Parse and validate together
 - [ ] handle other edge cases
-- [ ] test printContent
 
 **MAYBE**
 
@@ -37,3 +36,4 @@
 - [x] Think of handling multiple files
 - [x] Work on multiple files
 - [x] customize the error messages 
+- [x] test printContent

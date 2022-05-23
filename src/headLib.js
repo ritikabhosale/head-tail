@@ -1,4 +1,3 @@
-const fs = require('fs');
 const { parseArgs } = require('./parseArgs.js');
 const { splitLines, joinLines } = require('./stringUtils.js');
 
@@ -15,9 +14,8 @@ const fileNameAndContent = (fileName, content) => {
   return `\n${formattedFileName} \n${content}`;
 };
 
-const getFormatter = files => {
+const getFormatter = files =>
   files.length === 1 ? identity : fileNameAndContent;
-};
 
 const validateFilesExist = files => {
   if (files.length === 0) {
@@ -64,7 +62,7 @@ const printContent = function (readFile, consoleOutput, consoleError, args) {
   const files = headMain(readFile, args);
   validateFilesExist(files);
   const formatter = getFormatter(files);
-  return files.map((file) => {
+  return files.forEach((file) => {
     const { fileName, content, error } = file;
     if (error.value) {
       consoleError(error.message);
