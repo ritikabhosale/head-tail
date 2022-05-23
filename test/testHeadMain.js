@@ -6,7 +6,7 @@ const shouldReturn = function (mockFile, content) {
     try {
       assert.equal(fileName, mockFile);
     } catch (error) {
-      throw { message: `ENOENT: no such file or directory, open '${fileName}'` };
+      throw { code: 'ENOENT' };
     }
     assert.equal(encoding, 'utf8');
     return content;
@@ -43,7 +43,7 @@ describe('headMain', () => {
         fileName: 'a.txt', content: '',
         error: {
           value: true,
-          message: 'ENOENT: no such file or directory, open \'a.txt\''
+          message: 'head: a.txt: No such file or directory'
         }
       }
     ];

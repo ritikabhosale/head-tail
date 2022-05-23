@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { parseArgs } = require('./parseArgs.js');
 const { splitLines, joinLines } = require('./stringUtils.js');
 
@@ -5,7 +6,30 @@ const extractLines = (lines, countOfLines) => lines.slice(0, countOfLines);
 
 const extractBytes = (content, countOfbytes) => content.slice(0, countOfbytes);
 
+const validateFilesExist = files => {
+  if (files.length === 0) {
+    throw { message: 'usage: head [-n lines | -c bytes] [file ...]' };
+  }
+};
+
+const getCustomError = (error, fileName) => {
+  const customErrors = {
+    ENOENT: `head: ${fileName}: No such file or directory`,
+    EACCES: `head: ${fileName}: Permission denied`
+  };
+  return customErrors[error];
+};
+
 const formatFileName = fileName => `==> ${fileName} <==`;
+
+const identity = (fileName, content) => content;
+
+const getFormatter = files => {
+  if (files.length === 1) {
+    return identity;
+  }
+  return fileNameAndContent;
+};
 
 const fileNameAndContent = (fileName, content) => {
   const formattedFileName = formatFileName(fileName);
@@ -33,7 +57,7 @@ const headMain = function (readFile, args) {
       headContent = head(content, { option, count });
     } catch (error) {
       customErr.value = true;
-      customErr.message = error.message;
+      customErr.message = getCustomError(error.code, file);
     }
     return { fileName: file, content: headContent, error: customErr };
   });
@@ -41,13 +65,15 @@ const headMain = function (readFile, args) {
 
 const printContent = function (readFile, ...args) {
   const files = headMain(readFile, args);
+  validateFilesExist(files);
+  const formatter = getFormatter(files);
   return files.map((file) => {
     const { fileName, content, error } = file;
     if (error.value) {
       console.error(error.message);
     }
     else {
-      console.log(fileNameAndContent(fileName, content));
+      console.log(formatter(fileName, content));
     }
   });
 };
