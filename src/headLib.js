@@ -6,6 +6,19 @@ const extractLines = (lines, countOfLines) => lines.slice(0, countOfLines);
 
 const extractBytes = (content, countOfbytes) => content.slice(0, countOfbytes);
 
+const formatFileName = fileName => `==> ${fileName} <==`;
+
+const identity = (fileName, content) => content;
+
+const fileNameAndContent = (fileName, content) => {
+  const formattedFileName = formatFileName(fileName);
+  return `\n${formattedFileName} \n${content}`;
+};
+
+const getFormatter = files => {
+  files.length === 1 ? identity : fileNameAndContent;
+};
+
 const validateFilesExist = files => {
   if (files.length === 0) {
     throw { message: 'usage: head [-n lines | -c bytes] [file ...]' };
@@ -18,22 +31,6 @@ const getCustomError = (error, fileName) => {
     EACCES: `head: ${fileName}: Permission denied`
   };
   return customErrors[error];
-};
-
-const formatFileName = fileName => `==> ${fileName} <==`;
-
-const identity = (fileName, content) => content;
-
-const getFormatter = files => {
-  if (files.length === 1) {
-    return identity;
-  }
-  return fileNameAndContent;
-};
-
-const fileNameAndContent = (fileName, content) => {
-  const formattedFileName = formatFileName(fileName);
-  return `\n${formattedFileName} \n${content}`;
 };
 
 const head = function (content, { option, count }) {
@@ -63,17 +60,17 @@ const headMain = function (readFile, args) {
   });
 };
 
-const printContent = function (readFile, ...args) {
+const printContent = function (readFile, consoleOutput, consoleError, args) {
   const files = headMain(readFile, args);
   validateFilesExist(files);
   const formatter = getFormatter(files);
   return files.map((file) => {
     const { fileName, content, error } = file;
     if (error.value) {
-      console.error(error.message);
+      consoleError(error.message);
     }
     else {
-      console.log(formatter(fileName, content));
+      consoleOutput(formatter(fileName, content));
     }
   });
 };

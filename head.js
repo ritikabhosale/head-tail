@@ -3,7 +3,8 @@ const { printContent } = require('./src/headLib.js');
 
 const main = function () {
   try {
-    printContent(fs.readFileSync, ...process.argv.slice(2));
+    const args = [...process.argv.slice(2)];
+    printContent(fs.readFileSync, console.log, console.error, args);
   } catch (error) {
     console.error(error.message);
   }

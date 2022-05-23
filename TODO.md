@@ -1,7 +1,7 @@
 **TODO**
 - [ ] Parse and validate together
-- [ ] customize the error messages 
 - [ ] handle other edge cases
+- [ ] test printContent
 
 **MAYBE**
 
@@ -36,3 +36,4 @@
 - [X] validateOption shouldn't return valid options, seperate that concern to another function
 - [x] Think of handling multiple files
 - [x] Work on multiple files
+- [x] customize the error messages 
