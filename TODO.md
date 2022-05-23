@@ -1,7 +1,7 @@
 **TODO**
-- [ ] Think of handling multiple files
-- [ ] Work on multiple files
 - [ ] Parse and validate together
+- [ ] customize the error messages 
+- [ ] handle other edge cases
 
 **MAYBE**
 
@@ -34,3 +34,5 @@
 - [x] Move headMain test cases to different test file
 - [X] Clean validateArgs function
 - [X] validateOption shouldn't return valid options, seperate that concern to another function
+- [x] Think of handling multiple files
+- [x] Work on multiple files
