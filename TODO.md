@@ -1,6 +1,8 @@
 **TODO**
 - [ ] Think of handling multiple files
 - [ ] Clean validateArgs function
+- [ ] validateOption shouldn't return valid options, seperate that concern to another function
+- [ ] Work on multiple files
 
 **MAYBE**
 
