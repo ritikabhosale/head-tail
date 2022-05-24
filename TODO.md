@@ -1,9 +1,7 @@
 **TODO**
 - [ ] Create tailLib and implement happy path for tail
-- [ ] Move all the test 
-- [ ] Implement lines option for tail
-- [ ] Implement bytes option for tail
-- [ ] Implement tail function with option object
+- [ ] Created tailMain
+- [ ] Connect tailMain to main
 
 **MAYBE**
 - [ ] handle other edge cases
@@ -44,3 +42,7 @@
 - [x] test printContent
 - [x] Parse and validate together
 - [x] Change option object and rename lineCount to line and byteCount to byte
+- [x] Implement tail function with option object
+- [x] Implement lines option for tail
+- [x] Implement bytes option for tail
+~~- [ ] Move all the test ~~

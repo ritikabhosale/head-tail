@@ -1,6 +1,5 @@
 const assert = require('assert');
-const { extractLastLines } = require('../src/tailLib.js');
-const { extractLastBytes } = require('../src/tailLib.js');
+const { extractLastLines, extractLastBytes, tail } = require('../src/tailLib.js');
 
 describe('extractLastLines', () => {
   it('should return the last line', () => {
@@ -36,5 +35,24 @@ describe('extractLastBytes', () => {
   it('should return any number of specified last bytes', () => {
     assert.deepStrictEqual(extractLastBytes('hii\nhello', 4), 'ello');
     assert.deepStrictEqual(extractLastBytes('hii\nhello', 8), 'ii\nhello');
+  });
+});
+
+describe('tail', () => {
+  it('should return last 1 line', () => {
+    assert.deepStrictEqual(tail('hii', { option: 'line', count: 1 }), 'hii');
+    assert.deepStrictEqual(tail('hii\nhello', { option: 'line', count: 1 }), 'hello');
+  });
+
+  it('should return last 2 lines', () => {
+    assert.deepStrictEqual(tail('hii\nhello\nbye', { option: 'line', count: 2 }), 'hello\nbye');
+  });
+
+  it('should return last 5 bytes', () => {
+    assert.deepStrictEqual(tail('hii\nhello', { option: 'byte', count: 5 }), 'hello');
+  });
+
+  it('should return any number of last given bytes', () => {
+    assert.deepStrictEqual(tail('hii\nhello\nbye\ntata', { option: 'byte', count: 10 }), 'o\nbye\ntata');
   });
 });
