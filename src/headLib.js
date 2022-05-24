@@ -27,7 +27,7 @@ const getCustomError = (error, fileName) => {
 };
 
 const head = function (content, { option, count }) {
-  if (option === 'byteCount') {
+  if (option === 'byte') {
     return extractBytes(content, count);
   }
   const lines = splitLines(content);

@@ -4,7 +4,6 @@
 - [ ] Implement lines option for tail
 - [ ] Implement bytes option for tail
 - [ ] Implement tail function with option object
-- [ ] Change option object and rename lineCount to line and byteCount to byte
 
 **MAYBE**
 - [ ] handle other edge cases
@@ -44,3 +43,4 @@
 - [x] customize the error messages 
 - [x] test printContent
 - [x] Parse and validate together
+- [x] Change option object and rename lineCount to line and byteCount to byte

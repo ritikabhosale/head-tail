@@ -6,7 +6,7 @@ describe('parseArgs', () => {
   it('should parse filename and lineCount option', () => {
     assert.deepStrictEqual(parseArgs(['-n', '1', 'abc.txt']), {
       files: ['abc.txt'],
-      option: 'lineCount',
+      option: 'line',
       count: 1
     });
   });
@@ -14,7 +14,7 @@ describe('parseArgs', () => {
   it('should parse the filename and return defualt option', () => {
     assert.deepStrictEqual(parseArgs(['abc.txt']), {
       files: ['abc.txt'],
-      option: 'lineCount',
+      option: 'line',
       count: 10
     });
   });
@@ -22,7 +22,7 @@ describe('parseArgs', () => {
   it('should parse filename and byteCount option', () => {
     assert.deepStrictEqual(parseArgs(['-c', '1', 'abc.txt']), {
       files: ['abc.txt'],
-      option: 'byteCount',
+      option: 'byte',
       count: 1
     });
   });
@@ -30,7 +30,7 @@ describe('parseArgs', () => {
   it('should parse filename and the last option when encountered repeatedly', () => {
     assert.deepStrictEqual(parseArgs(['-c', '1', '-c', '4', 'abc.txt']), {
       files: ['abc.txt'],
-      option: 'byteCount',
+      option: 'byte',
       count: 4
     });
   });
@@ -38,30 +38,30 @@ describe('parseArgs', () => {
 
 describe('parseOptions', () => {
   it('should parse all options and multiple files', () => {
-    const legalOptions = { 'n': 'lineCount', 'c': 'byteCount' };
+    const legalOptions = { 'n': 'lin', 'c': 'byte' };
     const expected = { options: [['c', 1], ['c', 2]], files: ['a.txt', 'b.txt'] };
     assert.deepStrictEqual(parseOptions(['-c1', '-c2', 'a.txt', 'b.txt'], legalOptions), expected);
   });
 
   it('should parse options even when they are space seperated', () => {
-    const legalOptions = { 'n': 'lineCount', 'c': 'byteCount' };
+    const legalOptions = { 'n': 'lin', 'c': 'byte' };
     const expected = { options: [['n', 1], ['n', 2]], files: ['a.txt'] };
     assert.deepStrictEqual(parseOptions(['-n', '1', '-n2', 'a.txt'], legalOptions), expected);
   });
 });
 
 describe('validateOptionValuePair', () => {
-  const legalOptions = { 'n': 'lineCount', 'c': 'byteCount' };
+  const legalOptions = { 'n': 'line', 'c': 'byte' };
   it('should throw illegal option error', () => {
     assert.throws(() => validateOptionValuePair(['b', 4], legalOptions), { message: 'head: illegal option --  b\nusage: head [-n lines | -c bytes] [file ...]' });
   });
 
   it('should throw illegal byte count error', () => {
-    assert.throws(() => validateOptionValuePair(['c', 'a'], legalOptions), { message: 'head: illegal byteCount -- a' });
+    assert.throws(() => validateOptionValuePair(['c', 'a'], legalOptions), { message: 'head: illegal byte count -- a' });
   });
 
   it('should throw illegal line count error', () => {
-    assert.throws(() => validateOptionValuePair(['n', 'a'], legalOptions), { message: 'head: illegal lineCount -- a' });
+    assert.throws(() => validateOptionValuePair(['n', 'a'], legalOptions), { message: 'head: illegal line count -- a' });
   });
 });
 

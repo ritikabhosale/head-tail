@@ -10,7 +10,7 @@ const splitArgs = args =>
 
 const getLastOption = (options, legalOptions) => {
   if (options.length === 0) {
-    return { option: 'lineCount', count: 10 };
+    return { option: 'line', count: 10 };
   }
   const [option, count] = options[options.length - 1];
   return { option: legalOptions[option], count };
@@ -37,7 +37,7 @@ const parseOptions = function (cmdLineArgs, legalOptions) {
 };
 
 const parseArgs = function (args) {
-  const legalOptions = { 'n': 'lineCount', 'c': 'byteCount' };
+  const legalOptions = { 'n': 'line', 'c': 'byte' };
   const { options, files } = parseOptions(args, legalOptions);
   const { option, count } = getLastOption(options, legalOptions);
   return { option, count, files };

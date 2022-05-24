@@ -13,7 +13,7 @@ const validateOption = function (option, legalOptions) {
 
 const validateCount = function (option, count, legalOptions) {
   if (isInvalidCount(count)) {
-    throw { message: `head: illegal ${legalOptions[option]} -- ${count}` };
+    throw { message: `head: illegal ${legalOptions[option]} count -- ${count}` };
   }
 };
 
