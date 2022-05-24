@@ -46,4 +46,3 @@ const parseArgs = function (args) {
 exports.parseArgs = parseArgs;
 exports.parseOptions = parseOptions;
 exports.validateOptionValuePair = validateOptionValuePair;
-

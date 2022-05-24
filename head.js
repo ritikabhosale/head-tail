@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { printContent } = require('./src/head/headLib.js');
+const { printContent } = require('./src/headLib.js');
 
 const main = function () {
   try {
