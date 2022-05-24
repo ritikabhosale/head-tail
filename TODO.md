@@ -3,6 +3,8 @@
 - [ ] Move all the test 
 - [ ] Implement lines option for tail
 - [ ] Implement bytes option for tail
+- [ ] Implement tail function with option object
+- [ ] Change option object and rename lineCount to line and byteCount to byte
 
 **MAYBE**
 - [ ] handle other edge cases
