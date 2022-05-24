@@ -1,9 +1,10 @@
 **TODO**
-- [ ] Create tailLib and implement happy path for tail
-- [ ] Created tailMain
-- [ ] Connect tailMain to main
+
+- [ ] investigate on tail not giving empty lines
+- [ ] seperate parseArgs of head and tail
 
 **MAYBE**
+
 - [ ] handle other edge cases
 - [ ] consider pulling common pattern from extractLines functions of head and tail
 
@@ -46,3 +47,6 @@
 - [x] Implement lines option for tail
 - [x] Implement bytes option for tail
 ~~- [ ] Move all the test ~~
+- [x] Create tailLib and implement happy path for tail
+- [x] Created tailMain
+- [x] Connect tailMain to main
