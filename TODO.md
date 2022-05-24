@@ -1,8 +1,8 @@
 **TODO**
-- [ ] Parse and validate together
-- [ ] handle other edge cases
+  Create tailLib and implement happy path for tail
 
 **MAYBE**
+- [ ] handle other edge cases
 
 **DONE**
 
@@ -37,3 +37,4 @@
 - [x] Work on multiple files
 - [x] customize the error messages 
 - [x] test printContent
+- [x] Parse and validate together
