@@ -1,6 +1,6 @@
-const { parseArgs } = require('./parseArgs.js');
-const { splitLines, joinLines } = require('./stringUtils.js');
-const { validateFilesExist } = require('./validationLib.js');
+const { parseArgs } = require('../parseArgs.js');
+const { splitLines, joinLines } = require('../stringUtils');
+const { validateFilesExist } = require('../validationLib.js');
 
 const extractLines = (lines, countOfLines) => lines.slice(0, countOfLines);
 

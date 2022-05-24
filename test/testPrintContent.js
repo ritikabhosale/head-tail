@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { printContent } = require('../src/headLib');
+const { printContent } = require('../src/head/headLib.js');
 
 const shouldReturn = function (expectedInputs) {
   let index = 0;
