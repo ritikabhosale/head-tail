@@ -2,6 +2,7 @@
 - [ ] Create tailLib and implement happy path for tail
 - [ ] Move all the test 
 - [ ] Implement lines option for tail
+- [ ] Implement bytes option for tail
 
 **MAYBE**
 - [ ] handle other edge cases
