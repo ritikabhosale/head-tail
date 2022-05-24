@@ -1,5 +1,6 @@
 const { parseArgs } = require('./parseArgs.js');
 const { splitLines, joinLines } = require('./stringUtils.js');
+const { validateFilesExist } = require('./validationLib.js');
 
 const extractLines = (lines, countOfLines) => lines.slice(0, countOfLines);
 
@@ -16,12 +17,6 @@ const fileNameAndContent = (fileName, content) => {
 
 const getFormatter = files =>
   files.length === 1 ? identity : fileNameAndContent;
-
-const validateFilesExist = files => {
-  if (files.length === 0) {
-    throw { message: 'usage: head [-n lines | -c bytes] [file ...]' };
-  }
-};
 
 const getCustomError = (error, fileName) => {
   const customErrors = {
@@ -43,10 +38,7 @@ const headMain = function (readFile, args) {
   const { option, count, files } = parseArgs(args);
   return files.map((file) => {
     let headContent = '';
-    const customErr = {
-      value: false,
-      message: ''
-    };
+    const customErr = { value: false, message: '' };
     try {
       const content = readFile(file, 'utf8');
       headContent = head(content, { option, count });

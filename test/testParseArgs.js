@@ -1,5 +1,6 @@
 const assert = require('assert');
-const { parseArgs, parseOptions, validateOptions, areOptionsMerged } = require('../src/parseArgs.js');
+const { parseArgs, parseOptions, validateOptionValuePair } = require('../src/parseArgs.js');
+const { areOptionsMerged, validateCombinedOptions } = require('../src/validationLib.js');
 
 describe('parseArgs', () => {
   it('should parse filename and lineCount option', () => {
@@ -36,42 +37,37 @@ describe('parseArgs', () => {
 });
 
 describe('parseOptions', () => {
-  it('should parse all options and one file name', () => {
-    const expected = { options: [['n', 1], ['c', 2]], files: ['file.txt'] };
-    assert.deepStrictEqual(parseOptions(['-n1', '-c2', 'file.txt']), expected);
-  });
-
   it('should parse all options and multiple files', () => {
-    const expected = { options: [['v', 1], ['c', 2]], files: ['a.txt', 'b.txt'] };
-    assert.deepStrictEqual(parseOptions(['-v1', '-c2', 'a.txt', 'b.txt']), expected);
+    const legalOptions = { 'n': 'lineCount', 'c': 'byteCount' };
+    const expected = { options: [['c', 1], ['c', 2]], files: ['a.txt', 'b.txt'] };
+    assert.deepStrictEqual(parseOptions(['-c1', '-c2', 'a.txt', 'b.txt'], legalOptions), expected);
   });
 
   it('should parse options even when they are space seperated', () => {
-    const expected = { options: [['n', 1], ['c', 2]], files: ['a.txt'] };
-    assert.deepStrictEqual(parseOptions(['-n', '1', '-c2', 'a.txt']), expected);
-  });
-
-  it('should parse options without any file', () => {
-    const expected = { options: [['n', 1], ['c', 2]], files: [] };
-    assert.deepStrictEqual(parseOptions(['-n', '1', '-c2']), expected);
+    const legalOptions = { 'n': 'lineCount', 'c': 'byteCount' };
+    const expected = { options: [['n', 1], ['n', 2]], files: ['a.txt'] };
+    assert.deepStrictEqual(parseOptions(['-n', '1', '-n2', 'a.txt'], legalOptions), expected);
   });
 });
 
-describe('validateOptions', () => {
+describe('validateOptionValuePair', () => {
+  const legalOptions = { 'n': 'lineCount', 'c': 'byteCount' };
   it('should throw illegal option error', () => {
-    assert.throws(() => validateOptions([['b', 4]]), { message: 'head: illegal option --  b\nusage: head [-n lines | -c bytes] [file ...]' });
+    assert.throws(() => validateOptionValuePair(['b', 4], legalOptions), { message: 'head: illegal option --  b\nusage: head [-n lines | -c bytes] [file ...]' });
   });
 
   it('should throw illegal byte count error', () => {
-    assert.throws(() => validateOptions([['c', 'a']]), { message: 'head: illegal byteCount -- a' });
+    assert.throws(() => validateOptionValuePair(['c', 'a'], legalOptions), { message: 'head: illegal byteCount -- a' });
   });
 
   it('should throw illegal line count error', () => {
-    assert.throws(() => validateOptions([['n', 'a']]), { message: 'head: illegal lineCount -- a' });
+    assert.throws(() => validateOptionValuePair(['n', 'a'], legalOptions), { message: 'head: illegal lineCount -- a' });
   });
+});
 
+describe('validateCombinedOptions', () => {
   it('should throw option combined error', () => {
-    assert.throws(() => validateOptions([['n', 4], ['c', 5]]), {
+    assert.throws(() => validateCombinedOptions([['n', '4'], ['c', '4']]), {
       message: 'head: can\'t combine line and byte counts'
     });
   });
