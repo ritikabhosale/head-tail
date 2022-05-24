@@ -1,8 +1,11 @@
 **TODO**
-  Create tailLib and implement happy path for tail
+- [ ] Create tailLib and implement happy path for tail
+- [ ] Move all the test 
+- [ ] Implement lines option for tail
 
 **MAYBE**
 - [ ] handle other edge cases
+- [ ] consider pulling common pattern from extractLines functions of head and tail
 
 **DONE**
 
