@@ -1,6 +1,6 @@
-const { parseArgs } = require('./parseArgs.js');
+const { parseArgs } = require('./headParseArgs.js');
 const { splitLines, joinLines } = require('./stringUtils');
-const { validateFilesExist } = require('./validationLib.js');
+const { validateFilesExist } = require('./headValidationLib.js');
 
 const extractLines = (lines, countOfLines) => lines.slice(0, countOfLines);
 
@@ -8,7 +8,7 @@ const extractBytes = (content, countOfbytes) => content.slice(0, countOfbytes);
 
 const formatFileName = fileName => `==> ${fileName} <==`;
 
-const identity = (fileName, content) => content;
+const identity = (fileName, content, seperator) => content;
 
 const fileNameAndContent = (fileName, content, seperator) => {
   const formattedFileName = formatFileName(fileName);
@@ -34,20 +34,22 @@ const head = function (content, { option, count }) {
   return joinLines(extractLines(lines, count));
 };
 
+const readHeadContent = function (readFile, { file, option, count }) {
+  let headContent = '';
+  const customErr = { value: false, message: '' };
+  try {
+    const content = readFile(file, 'utf8');
+    headContent = head(content, { option, count });
+  } catch (error) {
+    customErr.value = true;
+    customErr.message = getCustomError(error.code, file);
+  }
+  return { fileName: file, content: headContent, error: customErr };
+};
+
 const headMain = function (readFile, args) {
   const { option, count, files } = parseArgs(args);
-  return files.map((file) => {
-    let headContent = '';
-    const customErr = { value: false, message: '' };
-    try {
-      const content = readFile(file, 'utf8');
-      headContent = head(content, { option, count });
-    } catch (error) {
-      customErr.value = true;
-      customErr.message = getCustomError(error.code, file);
-    }
-    return { fileName: file, content: headContent, error: customErr };
-  });
+  return files.map(file => readHeadContent(readFile, { file, option, count }));
 };
 
 const printContent = function (readFile, consoleOutput, consoleError, args) {

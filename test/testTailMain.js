@@ -14,18 +14,42 @@ const shouldReturn = function (mockFile, content) {
 };
 
 describe('tailMain', () => {
-  it('should return last line of a file', () => {
+  it('should return 2 bytes of a file', () => {
     const mockReadFileSync = shouldReturn('a.txt', 'hello');
-    assert.deepStrictEqual(tailMain(mockReadFileSync, ['a.txt']), 'hello');
+    const expected = [{
+      fileName: 'a.txt', content: 'lo', error: {
+        value: false,
+        message: ''
+      }
+    }];
+    assert.deepStrictEqual(tailMain(mockReadFileSync, ['-c', '2', 'a.txt']), expected);
   });
 
-  it('should return last 2 bytes of a file', () => {
-    const mockReadFileSync = shouldReturn('a.txt', 'hello');
-    assert.deepStrictEqual(tailMain(mockReadFileSync, ['-c', '2', 'a.txt']), 'lo');
-  });
-
-  it('should throw error, file does not exist', () => {
+  it('should return object, file does not exist', () => {
     const mockReadFileSync = shouldReturn('b.txt', 'hello');
-    assert.throws(() => tailMain(mockReadFileSync, ['-c', '2', 'a.txt']), { message: 'tail: a.txt: No such file or directory' });
+    const expected = [
+      {
+        fileName: 'a.txt', content: '',
+        error: {
+          value: true,
+          message: 'tail: a.txt: No such file or directory'
+        }
+      }
+    ];
+    assert.deepStrictEqual(tailMain(mockReadFileSync, ['-c', '2', 'a.txt']), expected);
+  });
+
+  it('should throw error for mixing valid options', () => {
+    const mockReadFileSync = shouldReturn('a.txt', 'hello');
+    assert.throws(() => tailMain(mockReadFileSync, ['-n3', '-c6', 'a.txt']), {
+      message: 'usage: tail [-r] [-q] [-c # | -n #] [file ...]'
+    });
+  });
+
+  it('should throw error for invalid option', () => {
+    const mockReadFileSync = shouldReturn('a.txt', 'hello');
+    assert.throws(() => tailMain(mockReadFileSync, ['-v3', '-c6', 'a.txt']), {
+      message: 'usage: tail [-r] [-q] [-c # | -n #] [file ...]'
+    });
   });
 });

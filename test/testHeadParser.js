@@ -1,6 +1,6 @@
 const assert = require('assert');
-const { parseArgs, parseOptions, validateOptionValuePair } = require('../src/parseArgs.js');
-const { areOptionsMerged, validateCombinedOptions } = require('../src/validationLib.js');
+const { parseArgs, parseOptions, validateOptionValuePair } = require('../src/headParseArgs.js');
+const { areOptionsMerged, validateCombinedOptions } = require('../src/headValidationLib.js');
 
 describe('parseArgs', () => {
   it('should parse filename and lineCount option', () => {

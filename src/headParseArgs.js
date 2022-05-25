@@ -1,4 +1,4 @@
-const validationLib = require('./validationLib.js');
+const validationLib = require('./headValidationLib.js');
 const { validateOptionValuePair, validateCombinedOptions } = validationLib;
 
 const isOption = str => str.startsWith('-');

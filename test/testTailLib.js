@@ -40,19 +40,19 @@ describe('extractLastBytes', () => {
 
 describe('tail', () => {
   it('should return last 1 line', () => {
-    assert.deepStrictEqual(tail('hii', { option: 'line', count: 1 }), 'hii');
-    assert.deepStrictEqual(tail('hii\nhello', { option: 'line', count: 1 }), 'hello');
+    assert.deepStrictEqual(tail('hii', { option: '-n', count: 1 }), 'hii');
+    assert.deepStrictEqual(tail('hii\nhello', { option: '-n', count: 1 }), 'hello');
   });
 
   it('should return last 2 lines', () => {
-    assert.deepStrictEqual(tail('hii\nhello\nbye', { option: 'line', count: 2 }), 'hello\nbye');
+    assert.deepStrictEqual(tail('hii\nhello\nbye', { option: '-n', count: 2 }), 'hello\nbye');
   });
 
   it('should return last 5 bytes', () => {
-    assert.deepStrictEqual(tail('hii\nhello', { option: 'byte', count: 5 }), 'hello');
+    assert.deepStrictEqual(tail('hii\nhello', { option: '-c', count: 5 }), 'hello');
   });
 
   it('should return any number of last given bytes', () => {
-    assert.deepStrictEqual(tail('hii\nhello\nbye\ntata', { option: 'byte', count: 10 }), 'o\nbye\ntata');
+    assert.deepStrictEqual(tail('hii\nhello\nbye\ntata', { option: '-c', count: 10 }), 'o\nbye\ntata');
   });
 });
