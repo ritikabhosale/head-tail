@@ -2,11 +2,26 @@ const validationLib = require('./validationLib.js');
 const { validateOptionValuePair, validateCombinedOptions } = validationLib;
 
 const isOption = str => str.startsWith('-');
-
+const isIntegrated = arg => arg.length > 2;
 const splitArg = arg => [arg.slice(0, 2), arg.slice(2)];
 
-const splitArgs = args =>
-  args.flatMap(arg => isOption(arg) ? splitArg(arg) : [arg]).filter(arg => arg);
+const splitArgs = args => {
+  let index = 0;
+  const flattenArgs = [];
+
+  while (isOption(args[index])) {
+    let [option, value] = splitArg(args[index]);
+
+    if (!isIntegrated(args[index])) {
+      option = args[index];
+      value = args[index + 1];
+      index++;
+    }
+    flattenArgs.push(option, value);
+    index++;
+  }
+  return flattenArgs.concat(args.slice(index));
+};
 
 const getLastOption = (options, legalOptions) => {
   if (options.length === 0) {
