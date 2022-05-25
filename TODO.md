@@ -1,12 +1,14 @@
 **TODO**
 
-- [ ] investigate on tail not giving empty lines
-- [ ] seperate parseArgs of head and tail
+- [ ] Investigate on tail not giving empty lines
+- [ ] Seperate parseArgs of head and tail
+- [ ] Implement standalone options of tail
+- [ ] Make one parser work for head and tail using configs
 
 **MAYBE**
 
-- [ ] handle other edge cases
-- [ ] consider pulling common pattern from extractLines functions of head and tail
+- [ ] Handle other edge cases
+- [ ] Consider pulling common pattern from extractLines functions of head and tail
 
 **DONE**
 
