@@ -72,10 +72,10 @@ describe('printContent', () => {
     const actualLogs = [];
     const actualErrors = [];
     const mockedReadFileSync = shouldReturn([{ fileName: 'a.txt', content: 'hello' }, { fileName: 'b.txt', content: 'heyy' }]);
-    const mockedConsoleLog = mockConsoleLog(['\n==> a.txt <== \nhello'], actualLogs);
+    const mockedConsoleLog = mockConsoleLog(['==> a.txt <== \nhello'], actualLogs);
     const mockedConsoleError = mockConsoleError(['head: c.txt: No such file or directory'], actualErrors);
     printContent(mockedReadFileSync, mockedConsoleLog, mockedConsoleError, ['-n1', 'a.txt', 'c.txt']);
-    assert.deepStrictEqual(actualLogs, ['\n==> a.txt <== \nhello']);
+    assert.deepStrictEqual(actualLogs, ['==> a.txt <== \nhello']);
     assert.deepStrictEqual(actualErrors, ['head: c.txt: No such file or directory']);
   });
 });
