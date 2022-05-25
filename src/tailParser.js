@@ -108,3 +108,5 @@ const parseTailOptions = function (tailOptionsConfig, cmdLineArgs) {
 
 exports.parseArgs = parseTailOptions.bind(null, tailOptionsConfig);
 exports.validateFilesExist = validateFilesExist;
+
+//some comment
