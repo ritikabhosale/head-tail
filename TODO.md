@@ -1,4 +1,6 @@
-**TODO**
+# TAIL
+
+ **TODO**
 
 - [ ] Investigate on tail not giving empty lines
 - [ ] Seperate parseArgs of head and tail
@@ -9,6 +11,24 @@
 
 - [ ] Handle other edge cases
 - [ ] Consider pulling common pattern from extractLines functions of head and tail
+
+**DONE**
+
+- [x] Implement tail function with option object
+- [x] Implement lines option for tail
+- [x] Implement bytes option for tail
+~~- [ ] Move all the test ~~
+- [x] Create tailLib and implement happy path for tail
+- [x] Created tailMain
+- [x] Connect tailMain to main
+
+<br/>
+
+# HEAD
+
+**TODO**
+
+**MAYBE**
 
 **DONE**
 
@@ -45,10 +65,3 @@
 - [x] test printContent
 - [x] Parse and validate together
 - [x] Change option object and rename lineCount to line and byteCount to byte
-- [x] Implement tail function with option object
-- [x] Implement lines option for tail
-- [x] Implement bytes option for tail
-~~- [ ] Move all the test ~~
-- [x] Create tailLib and implement happy path for tail
-- [x] Created tailMain
-- [x] Connect tailMain to main

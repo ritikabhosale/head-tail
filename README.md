@@ -1,3 +1,5 @@
+# HEAD
+
 `head [-n count | -c bytes] [file ...]`
 
 ```
@@ -10,7 +12,9 @@ This option displays the specified number of lines of each specified file.
 head -c count [file...]
 This option displays the specified number of bytes of each specified file.
 ```
+<br/>
 
+# TAIL
 `tail [-c # | -n #] [file ...]`
 
 ```
