@@ -52,7 +52,7 @@ const headMain = function (readFile, args) {
   return files.map(file => readHeadContent(readFile, { file, option, count }));
 };
 
-const printContent = function (readFile, consoleOutput, consoleError, args) {
+const printContent = function (readFile, { log, error: outputError }, args) {
   const files = headMain(readFile, args);
   let seperator = '';
   validateFilesExist(files);
@@ -60,10 +60,10 @@ const printContent = function (readFile, consoleOutput, consoleError, args) {
   return files.forEach((file) => {
     const { fileName, content, error } = file;
     if (error.value) {
-      consoleError(error.message);
+      outputError(error.message);
     }
     else {
-      consoleOutput(formatter(fileName, content, seperator));
+      log(formatter(fileName, content, seperator));
       seperator = '\n';
     }
   });
