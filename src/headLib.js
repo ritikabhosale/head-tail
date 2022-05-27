@@ -12,7 +12,7 @@ const identity = (fileName, content, seperator) => content;
 
 const fileNameAndContent = (fileName, content, seperator) => {
   const formattedFileName = formatFileName(fileName);
-  return `${seperator}${formattedFileName} \n${content}`;
+  return `${seperator}${formattedFileName}\n${content}`;
 };
 
 const getFormatter = files =>
@@ -52,7 +52,7 @@ const headMain = function (readFile, args) {
   return files.map(file => readHeadContent(readFile, { file, option, count }));
 };
 
-const printContent = function (readFile, { log, error: outputError }, args) {
+const printContent = function (readFile, logOutput, logError, args) {
   const files = headMain(readFile, args);
   let seperator = '';
   validateFilesExist(files);
@@ -60,12 +60,11 @@ const printContent = function (readFile, { log, error: outputError }, args) {
   return files.forEach((file) => {
     const { fileName, content, error } = file;
     if (error.value) {
-      outputError(error.message);
+      logError(error.message);
+      return;
     }
-    else {
-      log(formatter(fileName, content, seperator));
-      seperator = '\n';
-    }
+    logOutput(formatter(fileName, content, seperator));
+    seperator = '\n';
   });
 };
 
