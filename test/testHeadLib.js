@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { head, extractLines, extractBytes } = require('../src/headLib.js');
+const { head, extractLines, extractBytes, readFileContent } = require('../src/headLib.js');
 
 describe('head', () => {
   it('should return one line of content', () => {
@@ -62,5 +62,40 @@ describe('extractBytes', () => {
   it('should count \n as a byte', () => {
     assert.deepStrictEqual(extractBytes('hi\n', 3), 'hi\n');
     assert.deepStrictEqual(extractBytes('hi\nhello', 4), 'hi\nh');
+  });
+});
+
+const shouldReturn = function (mockFile, content) {
+  return function (fileName, encoding) {
+    try {
+      assert.equal(fileName, mockFile);
+    } catch (error) {
+      throw { code: 'ENOENT' };
+    }
+    assert.equal(encoding, 'utf8');
+    return content;
+  };
+};
+
+describe('readFileContent', () => {
+  it('should return a line of a file', () => {
+    const mockReadFileSync = shouldReturn('abc', 'hello');
+    const expected = { fileName: 'abc', content: 'hello' };
+    assert.deepStrictEqual(readFileContent(mockReadFileSync, 'abc'), expected);
+  });
+
+  it('should return 2 bytes of a file', () => {
+    const mockReadFileSync = shouldReturn('file', 'hello');
+    const expected = { fileName: 'file', content: 'hello' };
+    assert.deepStrictEqual(readFileContent(mockReadFileSync, 'file'), expected);
+  });
+
+  it('should return object, file does not exist', () => {
+    const mockReadFileSync = shouldReturn('b.txt', 'hello');
+    const expected = {
+      fileName: 'abc',
+      error: { message: 'head: abc: No such file or directory' }
+    };
+    assert.deepStrictEqual(readFileContent(mockReadFileSync, 'abc'), expected);
   });
 });

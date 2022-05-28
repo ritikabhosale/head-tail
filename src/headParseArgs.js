@@ -1,5 +1,5 @@
 const validationLib = require('./headValidationLib.js');
-const { validateOptionValuePair, validateCombinedOptions } = validationLib;
+const { validateOptionValuePair, validateCombinedOptions, validateFilesExist } = validationLib;
 
 const isOption = str => str.startsWith('-');
 const isIntegrated = arg => arg.length > 2;
@@ -41,7 +41,8 @@ const parseOptions = function (cmdLineArgs, legalOptions) {
 
   let index = 0;
   while (isOptionsPresent(args, index)) {
-    const [option, value] = [args[index][1], args[index + 1]];
+    const option = args[index][1];
+    const value = args[index + 1];
     index = index + 2;
 
     validateOptionValuePair([option, value], legalOptions);
@@ -54,6 +55,7 @@ const parseOptions = function (cmdLineArgs, legalOptions) {
 const parseArgs = function (args) {
   const legalOptions = { 'n': 'line', 'c': 'byte' };
   const { options, files } = parseOptions(args, legalOptions);
+  validateFilesExist(files);
   const { option, count } = getLastOption(options, legalOptions);
   return { option, count, files };
 };

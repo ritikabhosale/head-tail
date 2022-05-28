@@ -1,22 +1,21 @@
 const { parseArgs } = require('./headParseArgs.js');
 const { splitLines, joinLines } = require('./stringUtils');
-const { validateFilesExist } = require('./headValidationLib.js');
 
 const extractLines = (lines, countOfLines) => lines.slice(0, countOfLines);
-
 const extractBytes = (content, countOfbytes) => content.slice(0, countOfbytes);
-
 const formatFileName = fileName => `==> ${fileName} <==`;
+const identity = (fileName, content) => content;
+const getFormatter = files => files.length === 1 ? identity : formatContent();
 
-const identity = (fileName, content, seperator) => content;
-
-const fileNameAndContent = (fileName, content, seperator) => {
-  const formattedFileName = formatFileName(fileName);
-  return `${seperator}${formattedFileName}\n${content}`;
+const formatContent = () => {
+  let seperator = '';
+  return function (fileName, content) {
+    const formattedFileName = formatFileName(fileName);
+    const formattedOutput = `${seperator}${formattedFileName}\n${content}`;
+    seperator = '\n';
+    return formattedOutput;
+  };
 };
-
-const getFormatter = files =>
-  files.length === 1 ? identity : fileNameAndContent;
 
 const getCustomError = (error, fileName) => {
   const customErrors = {
@@ -26,7 +25,7 @@ const getCustomError = (error, fileName) => {
   return customErrors[error];
 };
 
-const head = function (content, { option, count }) {
+const head = (content, { option, count }) => {
   if (option === 'byte') {
     return extractBytes(content, count);
   }
@@ -34,42 +33,56 @@ const head = function (content, { option, count }) {
   return joinLines(extractLines(lines, count));
 };
 
-const readHeadContent = function (readFile, { file, option, count }) {
-  let headContent = '';
-  const customErr = { value: false, message: '' };
+const readFileContent = (readFile, fileName) => {
+  const error = {};
   try {
-    const content = readFile(file, 'utf8');
-    headContent = head(content, { option, count });
-  } catch (error) {
-    customErr.value = true;
-    customErr.message = getCustomError(error.code, file);
+    const content = readFile(fileName, 'utf8');
+    return { fileName, content };
+  } catch (err) {
+    error.message = getCustomError(err.code, fileName);
   }
-  return { fileName: file, content: headContent, error: customErr };
+  return { fileName, error };
 };
 
-const headMain = function (readFile, args) {
+const headFile = (readFile, { file, option, count }) => {
+  const { fileName, content, error } = readFileContent(readFile, file);
+  if (error) {
+    return { fileName, error };
+  }
+  const headContent = head(content, { option, count });
+  return { fileName, headContent };
+};
+
+const headFiles = (readFile, { option, count, files }) => {
+  return files.map(file =>
+    headFile(readFile, { file, option, count }));
+};
+
+const getExitCode = (files) => files.some(file => file.error) ? 1 : 0;
+
+const headMain = (readFile, stream, args) => {
   const { option, count, files } = parseArgs(args);
-  return files.map(file => readHeadContent(readFile, { file, option, count }));
+  const formatter = getFormatter(files);
+  const headOfFiles = headFiles(readFile, { option, count, files });
+
+  headOfFiles.forEach(headOfFile =>
+    printContent(formatter, stream, headOfFile));
+  return getExitCode(headOfFiles);
 };
 
-const printContent = function (readFile, logOutput, logError, args) {
-  const files = headMain(readFile, args);
-  let seperator = '';
-  validateFilesExist(files);
-  const formatter = getFormatter(files);
-  return files.forEach((file) => {
-    const { fileName, content, error } = file;
-    if (error.value) {
-      logError(error.message);
-      return;
-    }
-    logOutput(formatter(fileName, content, seperator));
-    seperator = '\n';
-  });
+const printContent = (formatter, { stdout, stderr }, headOfFile) => {
+  const { fileName, headContent, error } = headOfFile;
+  if (error) {
+    stdout(error.message);
+    return;
+  }
+  stderr(formatter(fileName, headContent));
 };
 
 exports.head = head;
+exports.headMain = headMain;
 exports.extractBytes = extractBytes;
 exports.extractLines = extractLines;
-exports.headMain = headMain;
 exports.printContent = printContent;
+exports.getFormatter = getFormatter;
+exports.readFileContent = readFileContent;
