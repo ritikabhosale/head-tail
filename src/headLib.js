@@ -7,6 +7,20 @@ const formatFileName = fileName => `==> ${fileName} <==`;
 const identity = (fileName, content) => content;
 const getFormatter = files => files.length === 1 ? identity : formatContent();
 
+const capitalizeFirstLetter = (str) =>
+  str[0].toUpperCase() + str.slice(1);
+
+const extractErrorMessage = (message) => {
+  const startFrom = message.indexOf(':') + 2;
+  const endTo = message.indexOf(',');
+  return capitalizeFirstLetter(message.slice(startFrom, endTo));
+};
+
+const createFsError = ({ message, code }, fileName) => {
+  const userMsg = `head: ${fileName}: ${extractErrorMessage(message)}`;
+  return { code, message: userMsg, fileName };
+};
+
 const formatContent = () => {
   let seperator = '';
   return function (fileName, content) {
@@ -15,14 +29,6 @@ const formatContent = () => {
     seperator = '\n';
     return formattedOutput;
   };
-};
-
-const getCustomError = (error, fileName) => {
-  const customErrors = {
-    ENOENT: `head: ${fileName}: No such file or directory`,
-    EACCES: `head: ${fileName}: Permission denied`
-  };
-  return customErrors[error];
 };
 
 const head = (content, { option, count }) => {
@@ -34,14 +40,13 @@ const head = (content, { option, count }) => {
 };
 
 const readFileContent = (readFile, fileName) => {
-  const error = {};
   try {
     const content = readFile(fileName, 'utf8');
     return { fileName, content };
   } catch (err) {
-    error.message = getCustomError(err.code, fileName);
+    const error = createFsError(err, fileName);
+    return { fileName, error };
   }
-  return { fileName, error };
 };
 
 const headFile = (readFile, { file, option, count }) => {

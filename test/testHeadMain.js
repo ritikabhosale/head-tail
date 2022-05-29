@@ -1,13 +1,13 @@
 const assert = require('assert');
 const { headMain } = require('../src/headLib.js');
 
-const shouldReturn = function (fileNameAndContent) {
+const shouldReturn = function (fileNameAndContent, fileError) {
   let index = 0;
   return function (fileName, encoding) {
     try {
       assert.equal(fileName, fileNameAndContent[index].fileName);
     } catch (error) {
-      throw { code: 'ENOENT' };
+      throw fileError;
     }
     assert.equal(encoding, 'utf8');
     return fileNameAndContent[index++].content;
@@ -72,9 +72,13 @@ describe('headMain', () => {
   });
 
   it('it should fail since the file doesn\'t exist', () => {
+    const fileError = {
+      code: 'ENOENT',
+      message: 'ENOENT: no such file or directory, open \'b.txt\''
+    };
     const mockedReadFileSync = shouldReturn([
-      { fileName: 'a.txt', content: 'hello' }
-    ]);
+      { fileName: 'a.txt', content: 'hello' }], fileError);
+
     const expectedContent = ['head: b.txt: No such file or directory'];
     const stream = logger(expectedContent);
 
@@ -84,10 +88,16 @@ describe('headMain', () => {
   });
 
   it('it should fail for a present and a absent file', () => {
+    const fileError = {
+      code: 'ENOENT',
+      message: 'ENOENT: no such file or directory, open \'b.txt\''
+    };
+
     const mockedReadFileSync = shouldReturn([
       { fileName: 'a.txt', content: 'hello' },
       { fileName: 'b.txt', content: 'hii' }
-    ]);
+    ], fileError);
+
     const expectedContent = ['==> a.txt <==\nhello',
       'head: c.txt: No such file or directory'];
     const stream = logger(expectedContent);

@@ -65,12 +65,12 @@ describe('extractBytes', () => {
   });
 });
 
-const shouldReturn = function (mockFile, content) {
+const shouldReturn = function (mockFile, content, fileError) {
   return function (fileName, encoding) {
     try {
       assert.equal(fileName, mockFile);
     } catch (error) {
-      throw { code: 'ENOENT' };
+      throw fileError;
     }
     assert.equal(encoding, 'utf8');
     return content;
@@ -90,12 +90,57 @@ describe('readFileContent', () => {
     assert.deepStrictEqual(readFileContent(mockReadFileSync, 'file'), expected);
   });
 
-  it('should return object, file does not exist', () => {
-    const mockReadFileSync = shouldReturn('b.txt', 'hello');
+  it('should return error object, file does not exist', () => {
+    const fileError = {
+      code: 'ENOENT',
+      message: 'ENOENT: no such file or directory, open \'abc\''
+    };
+    const mockReadFileSync = shouldReturn('b.txt', 'hello', fileError);
+
     const expected = {
       fileName: 'abc',
-      error: { message: 'head: abc: No such file or directory' }
+      error: {
+        code: 'ENOENT',
+        fileName: 'abc',
+        message: 'head: abc: No such file or directory'
+      }
     };
     assert.deepStrictEqual(readFileContent(mockReadFileSync, 'abc'), expected);
+  });
+
+  it('should return error object, when file permissions denied', () => {
+    const fileError = {
+      code: 'EACCESS',
+      message: 'EACCESS: permissions denied, read \'b.txt\''
+    };
+    const mockReadFileSync = shouldReturn('a.txt', 'hello', fileError);
+
+    const expected = {
+      fileName: 'b.txt',
+      error: {
+        code: 'EACCESS',
+        fileName: 'b.txt',
+        message: 'head: b.txt: Permissions denied'
+      }
+    };
+    assert.deepStrictEqual(readFileContent(mockReadFileSync, 'b.txt'), expected);
+  });
+
+  it('should return error object, when directory is specified', () => {
+    const fileError = {
+      code: 'EISDIR',
+      message: 'EISDIR: illegal operation on a directory, read'
+    };
+    const mockReadFileSync = shouldReturn('a.txt', 'hello', fileError);
+
+    const expected = {
+      fileName: 'b.txt',
+      error: {
+        code: 'EISDIR',
+        fileName: 'b.txt',
+        message: 'head: b.txt: Illegal operation on a directory'
+      }
+    };
+    assert.deepStrictEqual(readFileContent(mockReadFileSync, 'b.txt'), expected);
   });
 });
